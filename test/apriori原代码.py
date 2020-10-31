@@ -1,3 +1,4 @@
+
 """
 # Python 2.7
 # Filename: apriori.py
@@ -6,41 +7,6 @@
 # Blog: http://www.cnblogs.com/llhthinker/p/6719779.html
 # Date: 2017-04-16
 """
-import xlrd
-import xlwt
-
-def readdata(path):
-    #workbook=xlrd.open_workbook(path)
-    #table = workbook.sheets()[0]
-    #nrows = table.nrows #行数
-    #ncols = table.ncols #列数
-    #c1=arange(0,nrows,1)
-    #dataMatrix=zeros((nrows,ncols))
-    #dataMatrix=[[] for i in range(nrows)]
-    #for i in range(nrows):
-        #for j in range(ncols):
-    #for i in dataMatrix:
-        #for j in i:
-            #dataMatrix[i][j]=table.cell(i,j).value
-        #col_values=table.col_values(i)
-       # minVals=min(col_values)
-        #maxVals=max(col_values)
-        #cols1=matrix(col_values) # 把list转换为矩阵进行矩阵操作
-        #ranges=maxVals-minVals
-        #b=cols1-minVals
-        #normcols = b / ranges  # 数据进行归一化处理
-        #datamatrix[:, x] = normcols # 把数据进行存储
-        #dataMatrix[i]=table.col_values(i)
-    file=open(path,mode='r',encoding='UTF-8')
-    dataMatrix=[]
-    contents = file.readlines()
-    for msg in contents:
-        msg = msg.strip('\n')
-        adm = msg.split('~')
-        dataMatrix.append(adm)
-    file.close()        
-    return dataMatrix
-
 
 
 def load_data_set():
@@ -49,7 +15,9 @@ def load_data_set():
     Returns: 
         A data set: A list of transactions. Each transaction contains several items.
     """
-    data_set = readdata('D:\\各种数据集\\专利数据\\city文本.txt')
+    data_set = [['l1', 'l2', 'l5'], ['l2', 'l4'], ['l2', 'l3'],
+            ['l1', 'l2', 'l4'], ['l1', 'l3'], ['l2', 'l3'],
+            ['l1', 'l3'], ['l1', 'l2', 'l3', 'l5'], ['l1', 'l2', 'l3']]
     return data_set
 
 
@@ -198,7 +166,7 @@ if __name__ == "__main__":
     Test
     """
     data_set = load_data_set()
-    L, support_data = generate_L(data_set, k=10, min_support=0.2)
+    L, support_data = generate_L(data_set, k=3, min_support=0.2)
     big_rules_list = generate_big_rules(L, support_data, min_conf=0.7)
     for Lk in L:
         print (("=")*50)
