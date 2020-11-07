@@ -153,7 +153,7 @@ class Apriori_plus():
 if __name__=="__main__":
     ##config
 
-    filename="药方.xls"
+    #filename="药方.xls"
     # min_support=600#最小支持度
     # min_conf=0.9#最小置信度
     # size=8#频繁项最大大小
@@ -165,8 +165,8 @@ if __name__=="__main__":
     current_path=os.getcwd()
     if not os.path.exists(current_path+"/log"):
         os.mkdir("log")
-    path=current_path+"/dataset/"+filename
-    save_path=current_path+"/log/"+filename.split(".")[0]+"_apriori_plus.txt"
+    #path=current_path+"/dataset/"+filename
+    #save_path=current_path+"/log/"+filename.split(".")[0]+"_apriori_plus.txt"
 
     data=load_data('D:\\各种数据集\\专利数据\\UREF：OCL.txt')
     apriori_plus=Apriori_plus()
