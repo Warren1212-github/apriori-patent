@@ -3,7 +3,7 @@ import os
 import time
 from tqdm import tqdm
 
-def load_data(path):
+def load_data(path):#导入原数据集合，分词后存入二维数组
     file=open(path,mode='r',encoding='UTF-8')
     dataMatrix=[]
     contents = file.readlines()
@@ -44,7 +44,7 @@ class Apriori_plus():
     def create_l1_l3(self,data_dic,support_data,min_support):#基于散列技术一次遍历数据集生成L1,L2,L3
         L=[set() for i in range(3)]#用于保存频繁项
         item_count={}
-        for i in tqdm(data_dic):#一次遍历数据集
+        for i in tqdm(data_dic):#一次遍历数据集/tqdm包显示进度条
             l=len(i)
             item=list(i)
             item.sort()
@@ -56,7 +56,7 @@ class Apriori_plus():
                 support_data[item] = item_count[item] 
         return L
 
-    def increase_ck_item(self,count,item,temp,l,size,index,item_count):#递归生成候选项(dfs方法)
+    def increase_ck_item(self,count,item,temp,l,size,index,item_count):#递归生成候选项(deep first search方法)
         if len(temp)==size:
             ck_item=frozenset(temp)
             if ck_item not in item_count:
@@ -108,7 +108,6 @@ class Apriori_plus():
                     else:
                         item_count[item] += data_dic[t]
             flag[index]=temp_flag
-        t_num = float(len(data_dic))
         for item in item_count:#将满足支持度的候选项添加到频繁项集中
             if item_count[item] >= min_support:
                 Lk.add(item)
@@ -133,7 +132,7 @@ class Apriori_plus():
             print("frequent item {}：{}".format(i+1,len(L[i])))
         return L, support_data
 
-    def generate_R(self,data_set, min_support, min_conf):
+    def generate_R(self,data_set, min_support, min_conf):#生成规则
         L,support_data=self.generate_L(data_set,min_support)#根据频繁项集和支持度生成关联规则
         rule_list = []#保存满足置信度的规则
         sub_set_list = []#该数组保存检查过的频繁项
@@ -151,25 +150,8 @@ class Apriori_plus():
         return rule_list
 
 if __name__=="__main__":
-    ##config
-
-    filename="药方.xls"
-    # min_support=600#最小支持度
-    # min_conf=0.9#最小置信度
-    # size=8#频繁项最大大小
-    # filename="groceries.csv"
-    min_support=25#最小支持度
-    min_conf=0.7#最小置信度
-    size=1#频繁项最大大小
-
-    current_path=os.getcwd()
-    if not os.path.exists(current_path+"/log"):
-        os.mkdir("log")
-    path=current_path+"/dataset/"+filename
-    save_path=current_path+"/log/"+filename.split(".")[0]+"_apriori_plus.txt"
-
-    data=load_data('D:\\各种数据集\\专利数据\\INVT.txt')
+    data=load_data('D:\\各种数据集\\专利数据\\INVT.txt')#导入数据集
     apriori_plus=Apriori_plus()
-    rule_list=apriori_plus.generate_R(data,min_support=25,min_conf=0.7)
-    save_rule(rule_list,'D:\\各种数据集\\专利数据\\INVT结果.txt')
+    rule_list=apriori_plus.generate_R(data,min_support=25,min_conf=0.7)#设置支持度和最小置信度，生成规则
+    save_rule(rule_list,'D:\\各种数据集\\专利数据\\INVT结果.txt')#将结果存入指定txt文件
 

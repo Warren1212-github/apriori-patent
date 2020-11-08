@@ -170,6 +170,6 @@ if __name__=="__main__":
 
     data=load_data('D:\\各种数据集\\专利数据\\UREF：OCL.txt')
     apriori_plus=Apriori_plus()
-    rule_list=apriori_plus.generate_R(data,min_support=25,min_conf=0.7)
+    rule_list=apriori_plus.generate_R(data,min_support=50,min_conf=0.7)
     save_rule(rule_list,'D:\\各种数据集\\专利数据\\OCL结果.txt')
 
